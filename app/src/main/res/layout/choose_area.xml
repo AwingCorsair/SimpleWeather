@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:orientation="vertical" android:layout_width="match_parent"
+android:layout_height="match_parent">
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="#3CA9C4">
+
+    <TextView
+        android:id="@+id/title_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textColor="#fff"
+        android:textSize="24sp"/>
+</RelativeLayout>
+<Button
+    android:id="@+id/locate"
+    android:layout_width="40dp"
+    android:layout_height="40dp"
+    android:background="@drawable/locate"
+    android:layout_marginLeft="5dp"
+    />
+<ListView
+    android:id="@+id/list_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+</ListView>
+</LinearLayout>
