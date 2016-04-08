@@ -63,8 +63,6 @@ public class ShowWeatherActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.weather_layout);
         initView();
-     //   ApiTest apiTest=new ApiTest();
-     //   apiTest.Test(getApplicationContext());
         String countyName=getIntent().getStringExtra("countyName");
         apiTest(countyName);
     //    Log.d("sdkdemo", "result: " + response);
