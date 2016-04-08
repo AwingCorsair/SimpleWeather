@@ -23,13 +23,13 @@
 
 ## 目前已完成部分
 
-![pic1](http://v2.freep.cn/3tb_160404170355g64d512293.jpg)
+![pic1](https://github.com/AwingCorsair/SimpleWeather/blob/master/pic/choose.jpg)
 
-![pic2](http://v2.freep.cn/3tb_1604041703554p21512293.jpg)
+![pic2](https://github.com/AwingCorsair/SimpleWeather/blob/master/pic/location.jpg)
 
 定位功能已实现，但是尚未处理
 
-![pic3](http://v2.freep.cn/3tb_160407220637rml4512293.jpg)
+![pic3](https://github.com/AwingCorsair/SimpleWeather/blob/master/pic/main.jpg)
 
 ## 个人博客
 
