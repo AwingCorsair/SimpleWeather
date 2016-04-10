@@ -2,6 +2,7 @@ package com.awingcorsair.simpleweather.util;
 
 
 import android.app.Application;
+
 import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
@@ -39,6 +40,11 @@ public class LocationApplication extends Application {
                 sb.append(location.getAddrStr());//获得当前地址
             }
             Toast.makeText(getApplicationContext(),"Address:"+location.getAddrStr(),Toast.LENGTH_SHORT).show();
+            if(location.getAddrStr()!=null){
+                String str=location.getAddrStr();
+                String result = str.substring(str.indexOf("市") + 1, str.lastIndexOf("区"));
+    //            Toast.makeText(getApplicationContext(),"result= "+result, Toast.LENGTH_LONG).show();
+            }
             mLocationClient.stop();
         }
     }

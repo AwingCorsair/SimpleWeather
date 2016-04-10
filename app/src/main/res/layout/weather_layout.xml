@@ -10,11 +10,12 @@
         android:layout_height="50dp"
         android:background="#336666">
         <Button
-            android:id="@+id/side_list"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:id="@+id/left_menu"
+            android:background="@drawable/title_bar_menu"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_centerVertical="true"
-            android:paddingLeft="10dp"
+            android:layout_marginLeft="5dp"
             />
         <TextView
             android:id="@+id/city_name"
@@ -24,12 +25,13 @@
             android:textColor="#FFFFFF"
             android:textSize="24sp"/>
         <Button
-            android:id="@+id/change_city"
+            android:id="@+id/refresh"
+            android:background="@drawable/refresh"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_centerVertical="true"
-            android:paddingRight="10dp"
-            android:layout_alignParentRight="true"/>
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"/>
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"

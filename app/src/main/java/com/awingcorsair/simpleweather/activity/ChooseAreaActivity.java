@@ -273,6 +273,5 @@ public class ChooseAreaActivity extends AppCompatActivity{
         option.setIsNeedAddress(true);//反编译获得具体位置，只有网络定位才可以
         mLocationClient.setLocOption(option);
         mLocationClient.start();
-
     }
 }
