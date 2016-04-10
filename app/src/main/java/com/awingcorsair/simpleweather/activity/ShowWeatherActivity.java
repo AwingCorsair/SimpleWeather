@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.awingcorsair.simpleweather.R;
 import com.awingcorsair.simpleweather.util.Utility;
@@ -17,7 +19,7 @@ import com.baidu.apistore.sdk.network.Parameters;
 /**
  * Created by Mao on 2016/4/5.
  */
-public class ShowWeatherActivity extends AppCompatActivity {
+public class ShowWeatherActivity extends AppCompatActivity implements View.OnClickListener{
 
     private TextView wind;
 
@@ -37,7 +39,7 @@ public class ShowWeatherActivity extends AppCompatActivity {
 
     private TextView sun_rise;
 
-    private Button change_city;
+    private Button refresh;
 
     private TextView city_name;
 
@@ -56,6 +58,9 @@ public class ShowWeatherActivity extends AppCompatActivity {
     private TextView day_three_temp_below;
     private TextView day_three_temp_high;
     private TextView day_three_con;
+    private static String countyName;
+
+    private int mBackKeyPressedTimes = 0;
 
 
     @Override
@@ -63,7 +68,7 @@ public class ShowWeatherActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.weather_layout);
         initView();
-        String countyName=getIntent().getStringExtra("countyName");
+        countyName=getIntent().getStringExtra("countyName");
         apiTest(countyName);
     //    Log.d("sdkdemo", "result: " + response);
     //    Utility.handleWeatherResponse(this, response);
@@ -74,7 +79,8 @@ public class ShowWeatherActivity extends AppCompatActivity {
 
     private void initView(){
         city_name = (TextView) findViewById(R.id.city_name);
-        change_city = (Button) findViewById(R.id.change_city);
+        refresh = (Button) findViewById(R.id.refresh);
+        refresh.setOnClickListener(this);
         sun_rise = (TextView) findViewById(R.id.sun_rise);
         sun_down = (TextView) findViewById(R.id.sun_down);
         temp_now = (TextView) findViewById(R.id.temp_now);
@@ -158,10 +164,46 @@ public class ShowWeatherActivity extends AppCompatActivity {
                     public void onError(int status, String responseString, Exception e) {
                         Log.i("sdkdemo", "onError, status: " + status);
                         Log.i("sdkdemo", "errMsg: " + (e == null ? "" : e.getMessage()));
+                        Toast.makeText(ShowWeatherActivity.this,"哎呀，网络出错了",Toast.LENGTH_SHORT).show();
                     }
 
                 });
 
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.refresh:
+                apiTest(countyName);
+                showWeather();
+                Toast.makeText(ShowWeatherActivity.this,"更新完成",Toast.LENGTH_SHORT).show();
+
+        }
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        if (mBackKeyPressedTimes == 0) {
+            Toast.makeText(this, "再按一次退出程序 ", Toast.LENGTH_SHORT).show();
+            mBackKeyPressedTimes = 1;
+            new Thread() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } finally {
+                        mBackKeyPressedTimes = 0;
+                    }
+                }
+            }.start();
+            return;
+        }else{
+            this.finish();
+        }
+        super.onBackPressed();
+    }
 }
