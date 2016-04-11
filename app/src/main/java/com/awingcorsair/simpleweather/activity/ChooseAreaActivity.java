@@ -311,11 +311,17 @@ public class ChooseAreaActivity extends AppCompatActivity {
             mLocationClient.stop();
             String str = location.getDistrict();
             String locate_result = str.substring(0, str.length() - 1);
+            //Toast.makeText(ChooseAreaActivity.this,"定位失败"+location.getLocType(),Toast.LENGTH_SHORT).show();
+
             //show weather
-            Intent intent=new Intent(ChooseAreaActivity.this,ShowWeatherActivity.class);
-            intent.putExtra("countyName",locate_result);
-            startActivity(intent);
-            finish();
+            if(location.getLocType()==61||location.getLocType()==161) {
+                Intent intent = new Intent(ChooseAreaActivity.this, ShowWeatherActivity.class);
+                intent.putExtra("countyName", locate_result);
+                startActivity(intent);
+                finish();
+            }else{
+                Toast.makeText(ChooseAreaActivity.this,"定位失败，请手动选择城市",Toast.LENGTH_SHORT).show();
+            }
         }
 
     }

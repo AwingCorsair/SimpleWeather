@@ -117,7 +117,6 @@ public class ShowWeatherActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onClick(View v) {
                 apiTest(countyName);
-                showWeather();
                 Toast.makeText(ShowWeatherActivity.this, "更新完成", Toast.LENGTH_SHORT).show();
             }
         });
@@ -153,6 +152,9 @@ public class ShowWeatherActivity extends AppCompatActivity implements View.OnCli
         day_three_temp_high.setText(sharedPreferences.getString("day_three_temp_high", "NULL") + "℃");
     }
 
+    /**
+     * set Slide bar
+     */
     private void setUpMenu() {
 
         // attach to current activity;
