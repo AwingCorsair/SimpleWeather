@@ -45,9 +45,9 @@ public class ResideMenu extends FrameLayout {
     private ImageView imageViewShadow;
     private ImageView imageViewBackground;
     private LinearLayout layoutLeftMenu;
-    private LinearLayout layoutRightMenu;
+    //private LinearLayout layoutRightMenu;
     private View scrollViewLeftMenu;
-    private View scrollViewRightMenu;
+    //private View scrollViewRightMenu;
     private View scrollViewMenu;
     /**
      * Current attaching activity.
@@ -139,9 +139,9 @@ public class ResideMenu extends FrameLayout {
     /**
      * Returns right menu view so you can findViews and do whatever you want with
      */
-    public View getRightMenuView() {
-        return scrollViewRightMenu;
-    }
+//    public View getRightMenuView() {
+//        return scrollViewRightMenu;
+//    }
 
     @Override
     protected boolean fitSystemWindows(Rect insets) {
@@ -202,7 +202,7 @@ public class ResideMenu extends FrameLayout {
 
         ViewGroup parent = (ViewGroup) scrollViewLeftMenu.getParent();
         parent.removeView(scrollViewLeftMenu);
-        parent.removeView(scrollViewRightMenu);
+    //    parent.removeView(scrollViewRightMenu);
     }
 
     private void setShadowAdjustScaleXByOrientation() {
@@ -260,10 +260,11 @@ public class ResideMenu extends FrameLayout {
         if (direction == DIRECTION_LEFT) {
             this.leftMenuItems.add(menuItem);
             layoutLeftMenu.addView(menuItem);
-        } else {
-            this.rightMenuItems.add(menuItem);
-            layoutRightMenu.addView(menuItem);
         }
+//         else {
+//            this.rightMenuItems.add(menuItem);
+//            layoutRightMenu.addView(menuItem);
+//        }
     }
 
     /**
@@ -286,8 +287,8 @@ public class ResideMenu extends FrameLayout {
     public void setMenuItems(List<ResideMenuItem> menuItems, int direction) {
         if (direction == DIRECTION_LEFT)
             this.leftMenuItems = menuItems;
-        else
-            this.rightMenuItems = menuItems;
+//        else
+//            this.rightMenuItems = menuItems;
         rebuildMenu();
     }
 
@@ -298,11 +299,11 @@ public class ResideMenu extends FrameLayout {
                 layoutLeftMenu.addView(leftMenuItem);
         }
 
-        if (layoutRightMenu != null) {
-            layoutRightMenu.removeAllViews();
-            for (ResideMenuItem rightMenuItem : rightMenuItems)
-                layoutRightMenu.addView(rightMenuItem);
-        }
+//        if (layoutRightMenu != null) {
+//            layoutRightMenu.removeAllViews();
+//            for (ResideMenuItem rightMenuItem : rightMenuItems)
+//                layoutRightMenu.addView(rightMenuItem);
+//        }
     }
 
     /**
@@ -397,8 +398,9 @@ public class ResideMenu extends FrameLayout {
         if (direction == DIRECTION_LEFT) {
             scrollViewMenu = scrollViewLeftMenu;
             pivotX = screenWidth * 1.5f;
-        } else {
-            scrollViewMenu = scrollViewRightMenu;
+        }
+        else {
+        //    scrollViewMenu = scrollViewRightMenu;
             pivotX = screenWidth * -0.5f;
         }
 
@@ -445,7 +447,7 @@ public class ResideMenu extends FrameLayout {
                 viewActivity.setTouchDisable(false);
                 viewActivity.setOnClickListener(null);
                 hideScrollViewMenu(scrollViewLeftMenu);
-                hideScrollViewMenu(scrollViewRightMenu);
+        //        hideScrollViewMenu(scrollViewRightMenu);
                 if (menuListener != null)
                     menuListener.closeMenu();
             }

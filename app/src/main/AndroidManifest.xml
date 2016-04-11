@@ -25,7 +25,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-        android:name=".util.LocationApplication"
+
         >
         <activity android:name=".activity.ChooseAreaActivity">
             <intent-filter>

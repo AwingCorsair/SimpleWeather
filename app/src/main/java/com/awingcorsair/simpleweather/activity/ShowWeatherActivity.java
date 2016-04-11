@@ -1,9 +1,11 @@
 package com.awingcorsair.simpleweather.activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -67,7 +69,7 @@ public class ShowWeatherActivity extends AppCompatActivity implements View.OnCli
 
     private ResideMenu resideMenu;
     private ResideMenuItem itemHome;
-    private ResideMenuItem itemProfile;
+    //private ResideMenuItem itemProfile;
     //    private ResideMenuItem itemCalendar;
     private ResideMenuItem itemSettings;
 
@@ -78,18 +80,18 @@ public class ShowWeatherActivity extends AppCompatActivity implements View.OnCli
         initView();
         setUpMenu();
         countyName = getIntent().getStringExtra("countyName");
-        apiTest(countyName);
-        //    Log.d("sdkdemo", "result: " + response);
-        //    Utility.handleWeatherResponse(this, response);
-        showWeather();
-
+        if(!TextUtils.isEmpty(countyName)){
+            apiTest(countyName);
+            showWeather();
+        }else {
+            showWeather();
+        }
 
     }
 
     private void initView() {
         city_name = (TextView) findViewById(R.id.city_name);
         refresh = (Button) findViewById(R.id.refresh);
-        refresh.setOnClickListener(this);
         sun_rise = (TextView) findViewById(R.id.sun_rise);
         sun_down = (TextView) findViewById(R.id.sun_down);
         temp_now = (TextView) findViewById(R.id.temp_now);
@@ -111,6 +113,14 @@ public class ShowWeatherActivity extends AppCompatActivity implements View.OnCli
         day_three_con = (TextView) findViewById(R.id.day_three_con);
         day_three_temp_below = (TextView) findViewById(R.id.day_three_temp_below);
         day_three_temp_high = (TextView) findViewById(R.id.day_three_temp_high);
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                apiTest(countyName);
+                showWeather();
+                Toast.makeText(ShowWeatherActivity.this, "更新完成", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void showWeather() {
@@ -162,9 +172,9 @@ public class ShowWeatherActivity extends AppCompatActivity implements View.OnCli
         itemSettings = new ResideMenuItem(this, R.drawable.icon_settings, "设置");
 
         itemHome.setOnClickListener(this);
+        itemSettings.setOnClickListener(this);
         //itemProfile.setOnClickListener(this);
         //    itemCalendar.setOnClickListener(this);
-        itemSettings.setOnClickListener(this);
 
         resideMenu.addMenuItem(itemHome, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(itemSettings, ResideMenu.DIRECTION_LEFT);
@@ -191,7 +201,6 @@ public class ShowWeatherActivity extends AppCompatActivity implements View.OnCli
 
         ApiStoreSDK.init(getApplicationContext(), "375c83c832fb063405f1c81b1e12d9dc");
         Parameters para = new Parameters();
-//        String cityName="浦口";
         para.put("city", countyName);
         ApiStoreSDK.execute("http://apis.baidu.com/heweather/weather/free",
                 ApiStoreSDK.GET,
@@ -201,10 +210,9 @@ public class ShowWeatherActivity extends AppCompatActivity implements View.OnCli
                     @Override
                     public void onSuccess(int status, String responseString) {
 
-                        Log.d("sdkdemo", responseString);
+                        //    Log.i("sdkdemo", "onSuccess" + responseString);
                         Utility.handleWeatherResponse(ShowWeatherActivity.this, responseString);
                         showWeather();
-                        Log.i("sdkdemo", "onSuccess" + responseString);
                     }
 
                     @Override
@@ -226,14 +234,26 @@ public class ShowWeatherActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.refresh:
-                apiTest(countyName);
-                showWeather();
-                Toast.makeText(ShowWeatherActivity.this, "更新完成", Toast.LENGTH_SHORT).show();
-
+        if(v==itemHome){
+            SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
+            editor.putBoolean("city_selected",false);
+            editor.commit();
+            Intent intent=new Intent(this,ChooseAreaActivity.class);
+            startActivity(intent);
+            finish();
+        }else if(v==itemSettings){
+    //        changeFragment(new SettingFragment());
         }
     }
+//
+//    private void changeFragment(Fragment targetFragment){
+//        resideMenu.clearIgnoredViewList();
+//        getSupportFragmentManager()
+//                .beginTransaction()
+//                .replace(R.id.main_fragment, targetFragment, "fragment")
+//                .setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+//                .commit();
+//    }
 
     /**
      * open Gesture slide

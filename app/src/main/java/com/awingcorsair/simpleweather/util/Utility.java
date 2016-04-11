@@ -146,6 +146,7 @@ public class Utility {
      */
     public static void saveWeatherInfoBasic(Context context,String cityName,String tempNow,String feelTemp,String currentCondition){
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        editor.putBoolean("city_selected",true);
         editor.putString("city_name", cityName);
         editor.putString("temp_now", tempNow);
         editor.putString("feel_temp", feelTemp);
