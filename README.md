@@ -16,20 +16,26 @@
 *   三日天气预报
     *   日期、天气状况
     *   最高气温、最低气温
-*   常用城市记忆（待完成）
-*   自动定位（待完成）+手动选择城市
+*   常用城市记忆（纠结中）
+*   自动定位+手动选择城市
 
-项目目前没有使用任何诸如RxJava、Material Design等设计，因为刚知道有这些设计正准备血
+项目目前没有使用任何诸如RxJava、Material Design等设计，因为刚知道有这些设计正在学习
 
 ## 目前已完成部分
 
 ![pic1](https://github.com/AwingCorsair/SimpleWeather/blob/master/pic/choose.jpg)
 
-![pic2](https://github.com/AwingCorsair/SimpleWeather/blob/master/pic/location.jpg)
+用户可以选择通过点击定位按钮直接显示天气或者手动选择城市
 
-定位功能已实现，但是尚未处理
+![pic2](https://github.com/AwingCorsair/SimpleWeather/blob/master/pic/show.jpg)
 
-![pic3](https://github.com/AwingCorsair/SimpleWeather/blob/master/pic/main.jpg)
+已添加侧滑功能，感谢SpecialCyCi提供的开源代码[ResideMenu传送门](https://github.com/SpecialCyCi/AndroidResideMenu/)
+
+![pic3](https://github.com/AwingCorsair/SimpleWeather/blob/master/pic/slide.jpg)
+
+## 未来更新
+
+正在思考设置菜单应该做些什么，还要添加通知栏和桌面小部件，主界面背景图也打算更换
 
 ## 个人博客
 
