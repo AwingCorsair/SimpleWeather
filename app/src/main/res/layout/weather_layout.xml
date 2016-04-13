@@ -3,12 +3,13 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#3399CC"
+    android:id="@+id/main_layout"
     >
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#336666">
+        >
         <Button
             android:id="@+id/left_menu"
             android:background="@drawable/title_bar_menu"

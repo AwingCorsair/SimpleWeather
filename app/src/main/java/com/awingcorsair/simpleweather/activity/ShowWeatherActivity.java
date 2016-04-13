@@ -10,12 +10,14 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.awingcorsair.simpleweather.R;
 import com.awingcorsair.simpleweather.SideSlip.ResideMenu;
 import com.awingcorsair.simpleweather.SideSlip.ResideMenuItem;
+import com.awingcorsair.simpleweather.util.ChangeBackground;
 import com.awingcorsair.simpleweather.util.Utility;
 import com.baidu.apistore.sdk.ApiCallBack;
 import com.baidu.apistore.sdk.ApiStoreSDK;
@@ -63,6 +65,7 @@ public class ShowWeatherActivity extends AppCompatActivity implements View.OnCli
     private TextView day_three_temp_below;
     private TextView day_three_temp_high;
     private TextView day_three_con;
+    private int condition_code;
     private static String countyName;
 
     private int mBackKeyPressedTimes = 0;
@@ -73,16 +76,18 @@ public class ShowWeatherActivity extends AppCompatActivity implements View.OnCli
     //    private ResideMenuItem itemCalendar;
     private ResideMenuItem itemSettings;
 
+    private LinearLayout layout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.weather_layout);
+    //    backChange();
         initView();
         setUpMenu();
         countyName = getIntent().getStringExtra("countyName");
         if(!TextUtils.isEmpty(countyName)){
             apiTest(countyName);
-            showWeather();
         }else {
             showWeather();
         }
@@ -116,10 +121,15 @@ public class ShowWeatherActivity extends AppCompatActivity implements View.OnCli
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                apiTest(countyName);
-                Toast.makeText(ShowWeatherActivity.this, "更新完成", Toast.LENGTH_SHORT).show();
+                if (!TextUtils.isEmpty(countyName)) {
+                    apiTest(countyName);
+                    Toast.makeText(ShowWeatherActivity.this, "更新完成", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(ShowWeatherActivity.this, "更新失败,请稍后重试", Toast.LENGTH_SHORT).show();
+                }
             }
         });
+        layout=(LinearLayout)findViewById(R.id.main_layout);
     }
 
     private void showWeather() {
@@ -150,7 +160,144 @@ public class ShowWeatherActivity extends AppCompatActivity implements View.OnCli
         day_three_con.setText(sharedPreferences.getString("day_three_con", "NULL"));
         day_three_temp_below.setText(sharedPreferences.getString("day_three_temp_below", "NULL"));
         day_three_temp_high.setText(sharedPreferences.getString("day_three_temp_high", "NULL") + "℃");
+
+        condition_code=sharedPreferences.getInt("condition_code", 100);
+        ChangeBackground background=new ChangeBackground(layout,condition_code);
+
     }
+
+//    private void backChange(){
+//        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+//        condition_code=sharedPreferences.getInt("condition_code", 100);
+//        layout=(LinearLayout)findViewById(R.id.main_layout);
+//
+//        new Thread() {
+//            public void run() {
+//                //这儿是耗时操作，完成之后更新UI；
+//                runOnUiThread(new Runnable(){
+//
+//                    @Override
+//                    public void run() {
+//                        Time t=new Time(); // or Time t=new Time("GMT+8");
+//                        t.setToNow(); // get system time
+//                        //    int year = t.year;
+//                        //    int month = t.month+1;
+//                        //    int date = t.monthDay;
+//                        int hour = t.hour;
+//                        if(hour>=18||hour<=6){
+//                            //according to http://www.heweather.com/documents/condition-code
+//                            switch (condition_code) {
+//                                case 100:
+//                                    layout.setBackgroundResource(R.drawable.night_clearsky);
+//                                    break;
+//                                case 101:
+//                                    layout.setBackgroundResource(R.drawable.night_cloudy);
+//                                    break;
+//                                case 102:
+//                                case 103:
+//                                case 104:
+//                                    layout.setBackgroundResource(R.drawable.night_partlycloudy);
+//                                    break;
+//                                case 300:
+//                                case 301:
+//                                case 302:
+//                                case 303:
+//                                case 304:
+//                                case 305:
+//                                case 306:
+//                                case 307:
+//                                case 308:
+//                                case 309:
+//                                case 310:
+//                                case 311:
+//                                case 312:
+//                                case 313:
+//                                    layout.setBackgroundResource(R.drawable.night_rain);
+//                                    break;
+//                                case 400:
+//                                case 401:
+//                                case 402:
+//                                case 403:
+//                                case 404:
+//                                case 405:
+//                                case 406:
+//                                case 407:
+//                                    layout.setBackgroundResource(R.drawable.night_snow);
+//                                    break;
+//                                case 500:
+//                                case 501:
+//                                case 502:
+//                                case 503:
+//                                case 504:
+//                                case 507:
+//                                case 508:
+//                                    layout.setBackgroundResource(R.drawable.day_fog);
+//                                    break;
+//                                default:
+//                                    layout.setBackgroundResource(R.drawable.night_clearsky);
+//                                    break;
+//                            }
+//                        }else {
+//                            Log.d("test","night"+hour);
+//                            switch (condition_code) {
+//                                case 100:
+//                                    layout.setBackgroundResource(R.drawable.day_clearsky);
+//                                    break;
+//                                case 101:
+//                                    layout.setBackgroundResource(R.drawable.day_cloudy);
+//                                    break;
+//                                case 102:
+//                                case 103:
+//                                case 104:
+//                                    layout.setBackgroundResource(R.drawable.day_partlycloudy);
+//                                    break;
+//                                case 300:
+//                                case 301:
+//                                case 302:
+//                                case 303:
+//                                case 304:
+//                                case 305:
+//                                case 306:
+//                                case 307:
+//                                case 308:
+//                                case 309:
+//                                case 310:
+//                                case 311:
+//                                case 312:
+//                                case 313:
+//                                    layout.setBackgroundResource(R.drawable.day_rain);
+//                                    break;
+//                                case 400:
+//                                case 401:
+//                                case 402:
+//                                case 403:
+//                                case 404:
+//                                case 405:
+//                                case 406:
+//                                case 407:
+//                                    layout.setBackgroundResource(R.drawable.day_snow);
+//                                    break;
+//                                case 500:
+//                                case 501:
+//                                case 502:
+//                                case 503:
+//                                case 504:
+//                                case 507:
+//                                case 508:
+//                                    layout.setBackgroundResource(R.drawable.day_fog);
+//                                    break;
+//                                default:
+//                                    layout.setBackgroundResource(R.drawable.day_clearsky);
+//                                    break;
+//                            }
+//                        }
+//                        Toast.makeText(ShowWeatherActivity.this,""+layout.getBackground().toString(),Toast.LENGTH_LONG).show();
+//                    }
+//
+//                });
+//            }
+//        }.start();
+//    }
 
     /**
      * set Slide bar

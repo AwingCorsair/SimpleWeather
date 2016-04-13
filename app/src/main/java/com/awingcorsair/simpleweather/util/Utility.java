@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.awingcorsair.simpleweather.Entity.Aqi;
 import com.awingcorsair.simpleweather.Entity.Astro;
@@ -94,7 +95,7 @@ public class Utility {
         Result result = gson.fromJson(response, Result.class);
         List<Weather> weatherInfoList = result.getWeatherInfoList();
         Weather weatherInfo = weatherInfoList.get(0);
-        Aqi aqi=weatherInfo.getAqi();
+    //    Aqi aqi=weatherInfo.getAqi();
         Now now=weatherInfo.getNow();
         Basic basic=weatherInfo.getBasic();
         String cityName=basic.getCity();
@@ -112,6 +113,7 @@ public class Utility {
         String wet= dailyforecast_today.getHum();
         String windDir=dailyforecast_today.getWind().getDir();
         String windSc=dailyforecast_today.getWind().getSc();
+        int condition_code=now.getCond().getCode();
 
         //initialize day1
         DailyForecast dailyforecast_day1 =weatherInfo.getDaily_forecast().get(1);
@@ -134,7 +136,7 @@ public class Utility {
         String tempBelowDay3= dailyforecast_day3.getTmp().getMin();
         String tempHighDay3= dailyforecast_day3.getTmp().getMax();
 
-        saveWeatherInfoBasic(context, cityName, tempNow, feelTemp, currentCondition);
+        saveWeatherInfoBasic(context, cityName, tempNow, feelTemp, currentCondition,condition_code);
         saveWeatherInfoToday(context,sunRiseToday,sunDownToday,tempBelowToday,tempHighToday,wet,windDir,windSc);
         saveWeatherInfoDay1(context, timeDay1, conditionDay1, tempBelowDay1, tempHighDay1);
         saveWeatherInfoDay2(context, timeDay2, conditionDay2, tempBelowDay2, tempHighDay2);
@@ -144,13 +146,14 @@ public class Utility {
     /**
      * save Weather Info of Basic
      */
-    public static void saveWeatherInfoBasic(Context context,String cityName,String tempNow,String feelTemp,String currentCondition){
+    public static void saveWeatherInfoBasic(Context context,String cityName,String tempNow,String feelTemp,String currentCondition,int condition_code){
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
         editor.putBoolean("city_selected",true);
         editor.putString("city_name", cityName);
         editor.putString("temp_now", tempNow);
         editor.putString("feel_temp", feelTemp);
         editor.putString("current_condition", currentCondition);
+        editor.putInt("condition_code", condition_code);
         editor.commit();
 
     }

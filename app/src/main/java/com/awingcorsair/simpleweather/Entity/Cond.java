@@ -5,11 +5,13 @@ package com.awingcorsair.simpleweather.Entity;
  */
 public class Cond {
 
+
+
     /**
      * "code": "100", //天气状况代码
      * "txt": "晴" //天气状况描述
      */
-    private String code;
+    private int code;
 
     private String txt;
 
@@ -54,11 +56,11 @@ public class Cond {
         this.txt_n = txt_n;
     }
 
-    public String getCode() {
+    public int getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(int code) {
         this.code = code;
     }
 
