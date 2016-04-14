@@ -309,7 +309,8 @@ public class ChooseAreaActivity extends AppCompatActivity {
             }
             //        Toast.makeText(getApplicationContext(),"Address:"+location.getAddrStr(),Toast.LENGTH_SHORT).show();
             mLocationClient.stop();
-            String str = location.getDistrict();
+        //    String str = location.getDistrict();
+            String str=location.getCity();
             String locate_result = str.substring(0, str.length() - 1);
             //Toast.makeText(ChooseAreaActivity.this,"定位失败"+location.getLocType(),Toast.LENGTH_SHORT).show();
 

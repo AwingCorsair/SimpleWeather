@@ -2,6 +2,8 @@ package com.awingcorsair.simpleweather.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -417,6 +419,55 @@ public class ShowWeatherActivity extends AppCompatActivity implements View.OnCli
 
 
     @Override
+    protected void onStop() {
+        super.onStop();
+//        if(layout.getBackground() != null){
+//
+//            Bitmap oldBitmap = ((BitmapDrawable) layout.getBackground()).getBitmap();
+//
+//            layout.setBackground(null);
+//
+//            if(oldBitmap != null){
+//
+//                oldBitmap.recycle();
+//
+//                oldBitmap = null;
+//
+//            }
+//
+//        }
+//
+//        // Other code.
+//
+//        System.gc();
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(layout.getBackground() != null){
+
+            Bitmap oldBitmap = ((BitmapDrawable) layout.getBackground()).getBitmap();
+
+            layout.setBackground(null);
+
+            if(oldBitmap != null){
+
+                oldBitmap.recycle();
+
+                oldBitmap = null;
+
+            }
+
+        }
+
+        // Other code.
+
+        System.gc();
+    }
+
+    @Override
     public void onBackPressed() {
         if (mBackKeyPressedTimes == 0) {
             Toast.makeText(this, "再按一次退出程序 ", Toast.LENGTH_SHORT).show();
@@ -438,5 +489,7 @@ public class ShowWeatherActivity extends AppCompatActivity implements View.OnCli
             this.finish();
         }
         super.onBackPressed();
+
+
     }
 }

@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/app/libs/nineoldandroids-library-2.4.0.jar" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/awingcorsair/simpleweather/SideSlip/ResideMenu.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/awingcorsair/simpleweather/SideSlip/ResideMenuItem.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/awingcorsair/simpleweather/SideSlip/TouchDisableView.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/button.9.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/button_on.9.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/frame.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/icon_calendar.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/icon_home.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/icon_profile.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/icon_settings.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/menu_background.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/shadow.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/title_bar_menu.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/title_bar_menu_on.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/residemenu_custom.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/residemenu_custom_left_scrollview.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/residemenu_item.xml" charset="GBK" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>
