@@ -25,12 +25,16 @@ import com.baidu.apistore.sdk.ApiCallBack;
 import com.baidu.apistore.sdk.ApiStoreSDK;
 import com.baidu.apistore.sdk.network.Parameters;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * Created by Mao on 2016/4/5.
  */
 public class ShowWeatherActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private TextView wind;
+    private TextView pm25;
 
     private TextView temp_high;
 
@@ -55,17 +59,14 @@ public class ShowWeatherActivity extends AppCompatActivity implements View.OnCli
 
     private TextView day_one_time;
     private TextView day_one_temp_below;
-    private TextView day_one_temp_high;
     private TextView day_one_con;
 
     private TextView day_two_time;
     private TextView day_two_temp_below;
-    private TextView day_two_temp_high;
     private TextView day_two_con;
 
     private TextView day_three_time;
     private TextView day_three_temp_below;
-    private TextView day_three_temp_high;
     private TextView day_three_con;
     private int condition_code;
     private static String countyName;
@@ -107,19 +108,19 @@ public class ShowWeatherActivity extends AppCompatActivity implements View.OnCli
         feel_temp = (TextView) findViewById(R.id.feel_temp);
         current_condition = (TextView) findViewById(R.id.current_condition);
         wet = (TextView) findViewById(R.id.wet);
-        wind = (TextView) findViewById(R.id.wind);
+        pm25 = (TextView) findViewById(R.id.pm25);
         day_one_time = (TextView) findViewById(R.id.day_one_time);
         day_one_con = (TextView) findViewById(R.id.day_one_con);
         day_one_temp_below = (TextView) findViewById(R.id.day_one_temp_below);
-        day_one_temp_high = (TextView) findViewById(R.id.day_one_temp_high);
+    //    day_one_temp_high = (TextView) findViewById(R.id.day_one_temp_high);
         day_two_time = (TextView) findViewById(R.id.day_two_time);
         day_two_con = (TextView) findViewById(R.id.day_two_con);
         day_two_temp_below = (TextView) findViewById(R.id.day_two_temp_below);
-        day_two_temp_high = (TextView) findViewById(R.id.day_two_temp_high);
+    //    day_two_temp_high = (TextView) findViewById(R.id.day_two_temp_high);
         day_three_time = (TextView) findViewById(R.id.day_three_time);
         day_three_con = (TextView) findViewById(R.id.day_three_con);
         day_three_temp_below = (TextView) findViewById(R.id.day_three_temp_below);
-        day_three_temp_high = (TextView) findViewById(R.id.day_three_temp_high);
+    //    day_three_temp_high = (TextView) findViewById(R.id.day_three_temp_high);
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -146,22 +147,19 @@ public class ShowWeatherActivity extends AppCompatActivity implements View.OnCli
         temp_below.setText(sharedPreferences.getString("temp_below", "Null"));
         temp_high.setText(sharedPreferences.getString("temp_high", "Null") + "℃");
         wet.setText("湿度：" + sharedPreferences.getString("wet", "Null") + "%");
-        wind.setText(sharedPreferences.getString("wind_dir", "Null") + "/" + sharedPreferences.getString("wind_sc", "Null"));
+        pm25.setText("PM2.5：" + sharedPreferences.getString("pm25", "Null"));
 
-        day_one_time.setText(sharedPreferences.getString("day_one_time", "NULL"));
+        day_one_time.setText(getWeek(sharedPreferences.getString("day_one_time", "NULL")));
         day_one_con.setText(sharedPreferences.getString("day_one_con", "NULL"));
-        day_one_temp_below.setText(sharedPreferences.getString("day_one_temp_below", "NULL"));
-        day_one_temp_high.setText(sharedPreferences.getString("day_one_temp_high", "NULL") + "℃");
+        day_one_temp_below.setText(sharedPreferences.getString("day_one_temp_below", "NULL")+"°"+"/"+sharedPreferences.getString("day_one_temp_high", "NULL") + "°");
 
-        day_two_time.setText(sharedPreferences.getString("day_two_time", "NULL"));
+        day_two_time.setText(getWeek(sharedPreferences.getString("day_two_time", "NULL")));
         day_two_con.setText(sharedPreferences.getString("day_two_con", "NULL"));
-        day_two_temp_below.setText(sharedPreferences.getString("day_two_temp_below", "NULL"));
-        day_two_temp_high.setText(sharedPreferences.getString("day_two_temp_high", "NULL") + "℃");
+        day_two_temp_below.setText(sharedPreferences.getString("day_two_temp_below", "NULL")+"°"+"/"+sharedPreferences.getString("day_two_temp_high", "NULL") + "°");
 
-        day_three_time.setText(sharedPreferences.getString("day_three_time", "NULL"));
+        day_three_time.setText(getWeek(sharedPreferences.getString("day_three_time", "NULL")));
         day_three_con.setText(sharedPreferences.getString("day_three_con", "NULL"));
-        day_three_temp_below.setText(sharedPreferences.getString("day_three_temp_below", "NULL"));
-        day_three_temp_high.setText(sharedPreferences.getString("day_three_temp_high", "NULL") + "℃");
+        day_three_temp_below.setText(sharedPreferences.getString("day_three_temp_below", "NULL")+"°"+"/"+sharedPreferences.getString("day_three_temp_high", "NULL") + "°");
 
         condition_code=sharedPreferences.getInt("condition_code", 100);
         ChangeBackground background=new ChangeBackground(layout,condition_code);
@@ -361,7 +359,7 @@ public class ShowWeatherActivity extends AppCompatActivity implements View.OnCli
                     @Override
                     public void onSuccess(int status, String responseString) {
 
-                        //    Log.i("sdkdemo", "onSuccess" + responseString);
+                            Log.i("log", "onSuccess" + responseString);
                         Utility.handleWeatherResponse(ShowWeatherActivity.this, responseString);
                         showWeather();
                     }
@@ -382,6 +380,29 @@ public class ShowWeatherActivity extends AppCompatActivity implements View.OnCli
 
     }
 
+    /**
+     * convert date to weekday
+     * @param sDate
+     * @return
+     */
+    public static String getWeek(String sDate){
+        try{
+            Date date = null;
+            SimpleDateFormat formater = new SimpleDateFormat();
+            formater.applyPattern("yyyy-MM-dd");
+                date = formater.parse(sDate);
+            String[] weekDays = {"星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"};
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+            int w = cal.get(Calendar.DAY_OF_WEEK) - 1;
+            if (w < 0) {
+                w = 0;
+            }
+            return weekDays[w];
+        }catch(Exception ex){
+            return null;
+        }
+    }
 
     @Override
     public void onClick(View v) {

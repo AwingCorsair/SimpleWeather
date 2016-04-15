@@ -95,7 +95,7 @@ public class Utility {
         Result result = gson.fromJson(response, Result.class);
         List<Weather> weatherInfoList = result.getWeatherInfoList();
         Weather weatherInfo = weatherInfoList.get(0);
-    //    Aqi aqi=weatherInfo.getAqi();
+        Aqi aqi=weatherInfo.getAqi();
         Now now=weatherInfo.getNow();
         Basic basic=weatherInfo.getBasic();
         String cityName=basic.getCity();
@@ -111,8 +111,8 @@ public class Utility {
         String tempBelowToday= dailyforecast_today.getTmp().getMin();
         String tempHighToday= dailyforecast_today.getTmp().getMax();
         String wet= dailyforecast_today.getHum();
-        String windDir=dailyforecast_today.getWind().getDir();
-        String windSc=dailyforecast_today.getWind().getSc();
+        String pm25=aqi.getCity().getPm25();
+        Log.d("lo","pm2.5:"+pm25);
         int condition_code=now.getCond().getCode();
 
         //initialize day1
@@ -137,7 +137,7 @@ public class Utility {
         String tempHighDay3= dailyforecast_day3.getTmp().getMax();
 
         saveWeatherInfoBasic(context, cityName, tempNow, feelTemp, currentCondition,condition_code);
-        saveWeatherInfoToday(context,sunRiseToday,sunDownToday,tempBelowToday,tempHighToday,wet,windDir,windSc);
+        saveWeatherInfoToday(context,sunRiseToday,sunDownToday,tempBelowToday,tempHighToday,wet,pm25);
         saveWeatherInfoDay1(context, timeDay1, conditionDay1, tempBelowDay1, tempHighDay1);
         saveWeatherInfoDay2(context, timeDay2, conditionDay2, tempBelowDay2, tempHighDay2);
         saveWeatherInfoDay3(context, timeDay3, conditionDay3, tempBelowDay3, tempHighDay3);
@@ -161,15 +161,14 @@ public class Utility {
     /**
      * save weather info of Today
      */
-    public static void saveWeatherInfoToday(Context context,String sunRiseToday,String sunDownToday,String tempBelowToday,String tempHighToday,String wet,String windDir,String windSc){
+    public static void saveWeatherInfoToday(Context context,String sunRiseToday,String sunDownToday,String tempBelowToday,String tempHighToday,String wet,String pm25){
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
         editor.putString("sun_rise",sunRiseToday);
         editor.putString("sun_down",sunDownToday);
         editor.putString("temp_below",tempBelowToday);
         editor.putString("temp_high",tempHighToday);
         editor.putString("wet",wet);
-        editor.putString("wind_dir",windDir);
-        editor.putString("wind_sc",windSc);
+        editor.putString("pm25",pm25);
         editor.commit();
     }
 
