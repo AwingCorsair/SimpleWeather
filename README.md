@@ -26,11 +26,11 @@
 
 用户可以选择通过点击定位按钮直接显示天气或者手动选择城市
 
-![pic2](https://github.com/AwingCorsair/SimpleWeather/blob/master/pic/night_main_show.jpg)
+![pic2](https://github.com/AwingCorsair/SimpleWeather/blob/master/pic/day_main.jpg)
 
 已添加侧滑功能，感谢SpecialCyCi提供的开源代码[ResideMenu传送门](https://github.com/SpecialCyCi/AndroidResideMenu/)
 
-![pic3](https://github.com/AwingCorsair/SimpleWeather/blob/master/pic/night_slide_show.jpg)
+![pic3](https://github.com/AwingCorsair/SimpleWeather/blob/master/pic/day_slide.jpg)
 
 已添加根据天气和当前时间动态改变主界面背景功能，图片素材来源于网络
 
