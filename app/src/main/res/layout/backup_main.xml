@@ -57,14 +57,21 @@
                 android:layout_height="180dp">
 
                 <TextView
-                    android:id="@+id/sun_rise"
+                    android:id="@+id/rise_lable"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
+                    android:text="日出"
                     android:textColor="#FFFFFF"
                     android:textSize="15sp" />
 
-
+                <TextView
+                    android:id="@+id/sun_rise"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rise_lable"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp" />
 
                 <LinearLayout
                     android:layout_width="200dp"
@@ -115,14 +122,22 @@
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/sun_down"
+                    android:id="@+id/down_label"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
+                    android:text="   日落"
                     android:textColor="#FFFFFF"
                     android:textSize="15sp" />
 
-
+                <TextView
+                    android:id="@+id/sun_down"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/down_label"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp" />
             </RelativeLayout>
 
             <LinearLayout
@@ -202,7 +217,7 @@
             android:layout_gravity="bottom|end"
             android:layout_marginBottom="@dimen/codelab_fab_margin_bottom"
             android:layout_marginRight="@dimen/codelab_fab_margin_right"
-            android:src="@drawable/ic_favorite_24dp"
+            android:src="@drawable/ic_favorite_border_black_24dp"
             app:elevation="6dp"
             app:pressedTranslationZ="12dp"
             card_view:fabSize="normal" />

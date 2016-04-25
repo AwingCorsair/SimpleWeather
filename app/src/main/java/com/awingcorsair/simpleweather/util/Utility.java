@@ -1,5 +1,6 @@
 package com.awingcorsair.simpleweather.util;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -207,4 +208,5 @@ public class Utility {
         editor.putString("day_three_temp_high",tempHighDay3);
         editor.commit();
     }
+
 }

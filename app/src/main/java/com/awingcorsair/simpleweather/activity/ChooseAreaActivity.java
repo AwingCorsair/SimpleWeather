@@ -3,12 +3,15 @@ package com.awingcorsair.simpleweather.activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -48,8 +51,8 @@ public class ChooseAreaActivity extends AppCompatActivity {
     private ArrayAdapter<String> adapter;
     private WeatherDB weatherDB;
     private List<String> dataList = new ArrayList<String>();
-    private Button locateButton;
 
+    private FloatingActionButton fab_location;
     private LocationClient mLocationClient;
 
     /**
@@ -81,6 +84,12 @@ public class ChooseAreaActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        //    getWindow().setStatusBarColor(getResources().getColor(R.color.colorMain));
+        }
         SharedPreferences sharedPreferences= PreferenceManager.getDefaultSharedPreferences(this);
         if(sharedPreferences.getBoolean("city_selected",false)){
             Intent intent=new Intent(ChooseAreaActivity.this,ShowWeatherActivity.class);
@@ -92,16 +101,14 @@ public class ChooseAreaActivity extends AppCompatActivity {
         setContentView(R.layout.choose_area);
         listView = (ListView) findViewById(R.id.list_view);
         titleText = (TextView) findViewById(R.id.title_text);
-        locateButton = (Button) findViewById(R.id.locate);
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, dataList);
         listView.setAdapter(adapter);
         weatherDB = WeatherDB.getInstance(this);
-        locateButton.setOnClickListener(new View.OnClickListener() {
+        fab_location=(FloatingActionButton)findViewById(R.id.fab_locate);
+        fab_location.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 getLocation();
-                //        String str = ((LocationApplication) getApplication()).getLocate_result();
-                //Toast.makeText(ChooseAreaActivity.this, "result=" + locate_result, Toast.LENGTH_SHORT).show();
             }
         });
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

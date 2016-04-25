@@ -56,14 +56,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="180dp">
 
-                <TextView
-                    android:id="@+id/sun_rise"
-                    android:layout_width="50dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:textColor="#FFFFFF"
-                    android:textSize="15sp" />
-
 
 
                 <LinearLayout
@@ -113,14 +105,6 @@
                             android:textSize="15dp" />
                     </LinearLayout>
                 </LinearLayout>
-
-                <TextView
-                    android:id="@+id/sun_down"
-                    android:layout_width="50dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:textColor="#FFFFFF"
-                    android:textSize="15sp" />
 
 
             </RelativeLayout>
@@ -192,6 +176,47 @@
             <include layout="@layout/cardview_day2" />
 
             <include layout="@layout/cardview_day3" />
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="20dp">
+                <TextView
+                    android:id="@+id/rise_lable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:text="日出:"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/sun_rise"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp"
+                    android:layout_toRightOf="@id/rise_lable"
+                    />
+                <TextView
+                    android:id="@+id/down_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@id/sun_down"
+                    android:text="日落:"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/sun_down"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp"
+                    android:layout_marginEnd="20dp"/>
+            </RelativeLayout>
+
         </LinearLayout>
 
 
@@ -202,7 +227,7 @@
             android:layout_gravity="bottom|end"
             android:layout_marginBottom="@dimen/codelab_fab_margin_bottom"
             android:layout_marginRight="@dimen/codelab_fab_margin_right"
-            android:src="@drawable/ic_favorite_24dp"
+            android:src="@drawable/ic_favorite_border_black_24dp"
             app:elevation="6dp"
             app:pressedTranslationZ="12dp"
             card_view:fabSize="normal" />
