@@ -30,7 +30,7 @@
 
 侧滑功能已更新如上图，下图为旧版本效果
 
-![pic2](https://github.com/AwingCorsair/SimpleWeather/blob/master/pic/day_main.jpg)
+![pic2](https://github.com/AwingCorsair/SimpleWeather/blob/master/pic/day_slide.jpg)
 
 旧版本使用的SpecialCyCi提供的开源代码[ResideMenu传送门](https://github.com/SpecialCyCi/AndroidResideMenu/)
 
