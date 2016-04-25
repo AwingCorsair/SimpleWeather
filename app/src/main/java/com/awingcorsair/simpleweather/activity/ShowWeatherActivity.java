@@ -78,7 +78,7 @@ public class ShowWeatherActivity extends AppCompatActivity implements View.OnCli
     private Button left_menu;
 
     private TextView city_name;
-    
+
     private TextView day_one_time;
     private TextView day_one_temp_below;
     private TextView day_one_con;
@@ -250,7 +250,7 @@ public class ShowWeatherActivity extends AppCompatActivity implements View.OnCli
      * about
      */
     private void showDialog() {
-        new AlertDialog.Builder(ShowWeatherActivity.this).setTitle("点赞")
+        new AlertDialog.Builder(ShowWeatherActivity.this).setTitle("关于")
                 .setMessage("感谢使用极简天气，欢迎到我的Github项目里Fork and Star^_^,如果想了解详细的开发过程，也欢迎来我的Blog逛一逛(｡・`ω´･)")
                 .setPositiveButton("屈尊一逛", new DialogInterface.OnClickListener() {
                     @Override
@@ -393,11 +393,7 @@ public class ShowWeatherActivity extends AppCompatActivity implements View.OnCli
     }
 
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        feedBack.dismiss();
-    }
+
 
     @Override
     protected void onDestroy() {
