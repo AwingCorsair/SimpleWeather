@@ -18,25 +18,33 @@
     *   最高气温、最低气温
 *   自动定位+手动选择城市
 
-项目目前没有使用任何诸如RxJava、Material Design等设计，因为刚知道有这些设计正在学习
+遵循Material Design设计，正在研究RxJava
 
 ## 目前已完成部分
 
-![pic1](https://github.com/AwingCorsair/SimpleWeather/blob/master/pic/choose.jpg)
+![pic1](https://github.com/AwingCorsair/SimpleWeather/blob/master/pic/select_city.jpg)
 
-用户可以选择通过点击定位按钮直接显示天气或者手动选择城市
+用户可以选择通过点击定位Fab按钮直接显示天气或者手动选择城市
+
+![pic3](https://github.com/AwingCorsair/SimpleWeather/blob/master/pic/sidemenu.jpg)
+
+侧滑功能已更新如上图，下图为旧版本效果
 
 ![pic2](https://github.com/AwingCorsair/SimpleWeather/blob/master/pic/day_main.jpg)
 
-已添加侧滑功能，感谢SpecialCyCi提供的开源代码[ResideMenu传送门](https://github.com/SpecialCyCi/AndroidResideMenu/)
-
-![pic3](https://github.com/AwingCorsair/SimpleWeather/blob/master/pic/day_slide.jpg)
+旧版本使用的SpecialCyCi提供的开源代码[ResideMenu传送门](https://github.com/SpecialCyCi/AndroidResideMenu/)
 
 已添加根据天气和当前时间动态改变主界面背景功能，图片素材来源于网络
 
+![pic4](https://github.com/AwingCorsair/SimpleWeather/blob/master/pic/about.jpg)
+
+![pic4](https://github.com/AwingCorsair/SimpleWeather/blob/master/pic/feedback.jpg)
+
+添加关于及反馈模块，用户的反馈将发送到邮箱
+
 ## 未来更新
 
-正在思考设置菜单应该做些什么，还要添加通知栏和桌面小部件
+迷茫中
 
 ## 个人博客
 
