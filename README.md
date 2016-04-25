@@ -26,6 +26,10 @@
 
 用户可以选择通过点击定位Fab按钮直接显示天气或者手动选择城市
 
+![pic1](https://github.com/AwingCorsair/SimpleWeather/blob/master/pic/main.jpg)
+
+主界面
+
 ![pic3](https://github.com/AwingCorsair/SimpleWeather/blob/master/pic/sidemenu.jpg)
 
 侧滑功能已更新如上图，下图为旧版本效果
