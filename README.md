@@ -26,17 +26,13 @@
 
 用户可以选择通过点击定位Fab按钮直接显示天气或者手动选择城市
 
-![pic1](https://github.com/AwingCorsair/SimpleWeather/blob/master/pic/main.jpg)
+![pic1](https://github.com/AwingCorsair/SimpleWeather/blob/master/pic/day_main.jpg)
 
 主界面
 
 ![pic3](https://github.com/AwingCorsair/SimpleWeather/blob/master/pic/sidemenu.jpg)
 
-侧滑功能已更新如上图，下图为旧版本效果
-
-![pic2](https://github.com/AwingCorsair/SimpleWeather/blob/master/pic/day_slide.jpg)
-
-旧版本使用的SpecialCyCi提供的开源代码[ResideMenu传送门](https://github.com/SpecialCyCi/AndroidResideMenu/)
+侧滑功能
 
 已添加根据天气和当前时间动态改变主界面背景功能，图片素材来源于网络
 
@@ -54,5 +50,5 @@
 
 开发经历会很详细的记录下来，毕竟菜鸟一个，以后再看当年自己写的文章应该会很有感触
 
-[AwingCorsair の Bolg](awingcorsair.github.io/)
+[AwingCorsair の Bolg](http://awingcorsair.github.io/)
 
