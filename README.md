@@ -50,5 +50,5 @@
 
 开发经历会很详细的记录下来，毕竟菜鸟一个，以后再看当年自己写的文章应该会很有感触
 
-[AwingCorsair の Bolg](awingcorsair.github.io)
+[AwingCorsair の Bolg](http://awingcorsair.github.io/)
 
