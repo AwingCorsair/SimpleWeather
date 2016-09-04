@@ -87,25 +87,25 @@ public class ChooseAreaActivity extends AppCompatActivity {
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-        //    getWindow().setStatusBarColor(getResources().getColor(R.color.colorMain));
+            //getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            //getWindow().setStatusBarColor(getResources().getColor(R.color.colorMain));
         }
-        SharedPreferences sharedPreferences= PreferenceManager.getDefaultSharedPreferences(this);
-        if(sharedPreferences.getBoolean("city_selected",false)){
-            Intent intent=new Intent(ChooseAreaActivity.this,ShowWeatherActivity.class);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        if (sharedPreferences.getBoolean("city_selected", false)) {
+            Intent intent = new Intent(ChooseAreaActivity.this, ShowWeatherActivity.class);
             startActivity(intent);
             finish();
             return;
         }
-//        requestWindowFeature(Window.FEATURE_NO_TITLE);
+           //requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.choose_area);
         listView = (ListView) findViewById(R.id.list_view);
         titleText = (TextView) findViewById(R.id.title_text);
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, dataList);
         listView.setAdapter(adapter);
         weatherDB = WeatherDB.getInstance(this);
-        fab_location=(FloatingActionButton)findViewById(R.id.fab_locate);
-        fab_location.setOnClickListener(new View.OnClickListener(){
+        fab_location = (FloatingActionButton) findViewById(R.id.fab_locate);
+        fab_location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getLocation();
@@ -116,7 +116,6 @@ public class ChooseAreaActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (currentLevel == LEVEL_PROVINCE) {
                     selectedProvince = provinceList.get(position);
-                    Log.d("why", "1 position : " + position);
                     queryCities();
                 } else if (currentLevel == LEVEL_CITY) {
                     selectedCity = cityList.get(position);
@@ -316,19 +315,19 @@ public class ChooseAreaActivity extends AppCompatActivity {
             }
             //        Toast.makeText(getApplicationContext(),"Address:"+location.getAddrStr(),Toast.LENGTH_SHORT).show();
             mLocationClient.stop();
-        //    String str = location.getDistrict();
-            String str=location.getCity();
+            //    String str = location.getDistrict();
+            String str = location.getCity();
             String locate_result = str.substring(0, str.length() - 1);
             //Toast.makeText(ChooseAreaActivity.this,"定位失败"+location.getLocType(),Toast.LENGTH_SHORT).show();
 
             //show weather
-            if(location.getLocType()==61||location.getLocType()==161) {
+            if (location.getLocType() == 61 || location.getLocType() == 161) {
                 Intent intent = new Intent(ChooseAreaActivity.this, ShowWeatherActivity.class);
                 intent.putExtra("countyName", locate_result);
                 startActivity(intent);
                 finish();
-            }else{
-                Toast.makeText(ChooseAreaActivity.this,"定位失败，请手动选择城市",Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(ChooseAreaActivity.this, "定位失败，请手动选择城市", Toast.LENGTH_SHORT).show();
             }
         }
 

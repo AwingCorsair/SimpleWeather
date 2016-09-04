@@ -221,8 +221,8 @@ public class ShowWeatherActivity extends AppCompatActivity implements View.OnCli
         feel_temp.setText(sharedPreferences.getString("feel_temp", "Null") + "℃");
         current_condition.setText(sharedPreferences.getString("current_condition", "Null"));
 
-        sun_down.setText(sharedPreferences.getString("sun_down", "Null") + "↓");
-        sun_rise.setText(sharedPreferences.getString("sun_rise", "Null") + "↑");
+        sun_down.setText(sharedPreferences.getString("sun_down", "Null"));
+        sun_rise.setText(sharedPreferences.getString("sun_rise", "Null"));
         temp_below.setText(sharedPreferences.getString("temp_below", "Null"));
         temp_high.setText(sharedPreferences.getString("temp_high", "Null") + "℃");
         wet.setText("湿度：" + sharedPreferences.getString("wet", "Null") + "%");
@@ -370,6 +370,7 @@ public class ShowWeatherActivity extends AppCompatActivity implements View.OnCli
         feedbackSettings.setRadioButtons(false); // Disables radio buttons
         feedbackSettings.setBugLabel("Bug");
         feedbackSettings.setIdeaLabel("建议");
+        feedbackSettings.setQuestionLabel(null);
 
         //RADIO BUTTONS ORIENTATION AND GRAVITY
         feedbackSettings.setOrientation(LinearLayout.HORIZONTAL); // Default
@@ -391,8 +392,6 @@ public class ShowWeatherActivity extends AppCompatActivity implements View.OnCli
     protected void onStop() {
         super.onStop();
     }
-
-
 
 
     @Override

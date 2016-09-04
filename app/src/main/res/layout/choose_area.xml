@@ -46,8 +46,9 @@
             android:layout_marginBottom="@dimen/codelab_fab_margin_bottom"
             android:layout_marginRight="@dimen/codelab_fab_margin_right"
             android:src="@drawable/location"
-            app:backgroundTint="#A2A2A2"
+            app:backgroundTint="@color/colorButton"
             app:elevation="6dp"
-            app:pressedTranslationZ="12dp" />
+            app:pressedTranslationZ="12dp"
+            android:background="@color/colorButton" />
     </android.support.design.widget.CoordinatorLayout>
 </LinearLayout>
