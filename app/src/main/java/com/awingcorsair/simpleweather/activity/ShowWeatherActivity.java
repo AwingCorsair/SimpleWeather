@@ -102,7 +102,6 @@ public class ShowWeatherActivity extends AppCompatActivity implements View.OnCli
     FloatingActionButton floatingActionButton;
     CoordinatorLayout frameLayout;
     private static String SITE="https://free-api.heweather.com/x3/weather?";
-
     private static String KEY="699359a18a2b4ee7beb382cf790b849e";
     private static final int SHOW_RESPONSE = 0;
 
