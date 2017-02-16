@@ -5,8 +5,6 @@ package com.awingcorsair.simpleweather.Entity;
  */
 public class Cond {
 
-
-
     /**
      * "code": "100", //天气状况代码
      * "txt": "晴" //天气状况描述

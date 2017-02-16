@@ -23,11 +23,17 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.2.1'
-    compile files('libs/ApiStoreSDK1.0.4.jar')
     compile files('libs/BaiduLBS_Android.jar')
     compile files('libs/gson-2.2.4.jar')
     compile files('libs/nineoldandroids-library-2.4.0.jar')
     compile 'com.android.support:design:23.2.1'
     compile 'com.android.support:cardview-v7:23.2.1'
     compile files('libs/feedback_v6.jar')
+    compile files('libs/commons-codec-1.6.jar')
+    compile files('libs/commons-logging-1.1.1.jar')
+    compile files('libs/fluent-hc-4.2.1.jar')
+    compile files('libs/httpclient-4.2.1.jar')
+    compile files('libs/httpclient-cache-4.2.1.jar')
+    compile files('libs/httpcore-4.2.1.jar')
+    compile files('libs/httpmime-4.2.1.jar')
 }

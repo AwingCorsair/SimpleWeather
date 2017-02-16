@@ -5,50 +5,47 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.awingcorsair.simpleweather.R;
-import com.awingcorsair.simpleweather.SideSlip.ResideMenu;
-import com.awingcorsair.simpleweather.SideSlip.ResideMenuItem;
 import com.awingcorsair.simpleweather.util.ChangeBackground;
 import com.awingcorsair.simpleweather.util.Utility;
-import com.baidu.apistore.sdk.ApiCallBack;
-import com.baidu.apistore.sdk.ApiStoreSDK;
-import com.baidu.apistore.sdk.network.Parameters;
 import com.suredigit.inappfeedback.FeedbackDialog;
 import com.suredigit.inappfeedback.FeedbackSettings;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.*;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+
 
 /**
  * Created by Mao on 2016/4/5.
@@ -95,7 +92,6 @@ public class ShowWeatherActivity extends AppCompatActivity implements View.OnCli
 
     private int mBackKeyPressedTimes = 0;
 
-
     private LinearLayout layout;
 
     DrawerLayout mDrawerLayout = null;
@@ -105,6 +101,10 @@ public class ShowWeatherActivity extends AppCompatActivity implements View.OnCli
     private FeedbackDialog feedBack;
     FloatingActionButton floatingActionButton;
     CoordinatorLayout frameLayout;
+    private static String SITE="https://free-api.heweather.com/x3/weather?";
+
+    private static String KEY="699359a18a2b4ee7beb382cf790b849e";
+    private static final int SHOW_RESPONSE = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,18 +112,20 @@ public class ShowWeatherActivity extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.weather_layout);
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
         }
         initView();
         countyName = getIntent().getStringExtra("countyName");
         if (!TextUtils.isEmpty(countyName)) {
-            apiTest(countyName);
+            sendRequestWithHttpClient(countyName);
         } else {
             showWeather();
         }
-
     }
 
-
+    /**
+     * init weather view
+     */
     private void initView() {
         showProgressDialog();
         left_menu = (Button) findViewById(R.id.left_menu);
@@ -155,7 +157,7 @@ public class ShowWeatherActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onClick(View v) {
                 if (!TextUtils.isEmpty(countyName)) {
-                    apiTest(countyName);
+                    sendRequestWithHttpClient(countyName);
                     Toast.makeText(ShowWeatherActivity.this, "更新完成", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(ShowWeatherActivity.this, "更新失败,请稍后重试", Toast.LENGTH_SHORT).show();
@@ -169,8 +171,6 @@ public class ShowWeatherActivity extends AppCompatActivity implements View.OnCli
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
                 int id = item.getItemId();
-                Fragment fragment = new Fragment();
-
                 switch (id) {
                     case R.id.change_city:
                         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(ShowWeatherActivity.this).edit();
@@ -180,14 +180,6 @@ public class ShowWeatherActivity extends AppCompatActivity implements View.OnCli
                         startActivity(intent);
                         finish();
                         break;
-//                    case R.id.setting:
-//                        Snackbar.make(navigationView, "Click one ", Snackbar.LENGTH_LONG).setAction("Yes", new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View v) {
-//                                Toast.makeText(ShowWeatherActivity.this, "ha ha", Toast.LENGTH_LONG).show();
-//                            }
-//                        }).show();
-//                        break;
                     case R.id.about:
                         showDialog();
                         break;
@@ -200,16 +192,13 @@ public class ShowWeatherActivity extends AppCompatActivity implements View.OnCli
         });
         frameLayout = (CoordinatorLayout) findViewById(R.id.fablayout);
         floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
-        //tabLayout=(TabLayout)findViewById(R.id.tabLayout);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mDrawerLayout.openDrawer(Gravity.LEFT);
-
             }
         });
     }
-
 
     /**
      * bind data to widget
@@ -245,7 +234,6 @@ public class ShowWeatherActivity extends AppCompatActivity implements View.OnCli
         closeProgressDialog();
     }
 
-
     /**
      * about
      */
@@ -279,39 +267,104 @@ public class ShowWeatherActivity extends AppCompatActivity implements View.OnCli
      *
      * @param countyName
      */
-    private void apiTest(String countyName) {
+    private void sendRequestWithHttpClient(final String countyName){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String url = SITE + "city=" + countyName + "&key=" + KEY;
+                HttpClient httpClient=new DefaultHttpClient();
+                HttpGet httpGet=new HttpGet(url);
+                try{
+                    HttpResponse httpResponse=httpClient.execute(httpGet);
+                    if(httpResponse.getStatusLine().getStatusCode()==200){
+                        HttpEntity entity=httpResponse.getEntity();
+                        String response= EntityUtils.toString(entity,"utf-8");
 
-        ApiStoreSDK.init(getApplicationContext(), "375c83c832fb063405f1c81b1e12d9dc");
-        Parameters para = new Parameters();
-        para.put("city", countyName);
-        ApiStoreSDK.execute("http://apis.baidu.com/heweather/weather/free",
-                ApiStoreSDK.GET,
-                para,
-                new ApiCallBack() {
-
-                    @Override
-                    public void onSuccess(int status, String responseString) {
-
-                        Log.i("log", "onSuccess" + responseString);
-                        Utility.handleWeatherResponse(ShowWeatherActivity.this, responseString);
-                        showWeather();
+                        Message message=new Message();
+                        message.what=SHOW_RESPONSE;
+                        message.obj=response.toString();
+                        handler.sendMessage(message);
                     }
-
-                    @Override
-                    public void onComplete() {
-                        Log.i("sdkdemo", "onComplete");
-                    }
-
-                    @Override
-                    public void onError(int status, String responseString, Exception e) {
-                        Log.i("sdkdemo", "onError, status: " + status);
-                        Log.i("sdkdemo", "errMsg: " + (e == null ? "" : e.getMessage()));
-                        Toast.makeText(ShowWeatherActivity.this, "哎呀，网络出错了", Toast.LENGTH_SHORT).show();
-                    }
-
-                });
-
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
+//    private void getData(String countyName) {
+////        HttpsURLConnection httpsURLConnection=null;
+////        InputStream is=null;
+////        String result=null;
+////        try{
+////            URL url=new URL(SITE+"city="+countyName+"&key="+KEY);
+////            httpsURLConnection=(HttpsURLConnection) url.openConnection();
+////            httpsURLConnection.setRequestMethod("GET");
+////            is=httpsURLConnection.getInputStream();
+////            BufferedReader br=new BufferedReader(new InputStreamReader(is));
+////            String line="";
+////            while((line=br.readLine())!=null){
+////                result=line+"\n";
+////            }
+////        }catch (Exception e){
+////            e.printStackTrace();
+////        }finally {
+////            if(is!=null){
+////                try{
+////                    is.close();
+////                }catch (IOException e){
+////                    e.printStackTrace();
+////                }
+////            }
+////            if(httpsURLConnection!=null){
+////                httpsURLConnection.disconnect();
+////            }
+////        }
+//
+//
+//        String url = SITE + "city=" + countyName + "&key=" + KEY;
+//        BufferedReader bf = null;
+//        String result = null;
+//        StringBuffer sb = new StringBuffer();
+//        try {
+//            URL wUrl = new URL(url);
+//            HttpsURLConnection httpURLConnection = (HttpsURLConnection) wUrl.openConnection();
+//            httpURLConnection.setRequestMethod("GET");
+//            httpURLConnection.connect();
+//            InputStream is = httpURLConnection.getInputStream();
+//            bf = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+//            String strRead = null;
+//            while ((strRead = bf.readLine()) != null) {
+//                sb.append(strRead);
+//            //    sb.append("\r\n");
+//            }
+//            bf.close();
+//            result = sb.toString();
+//            Log.i("log", "onSuccess" + countyName + result);
+//            Utility.handleWeatherResponse(ShowWeatherActivity.this, result);
+//            showWeather();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+    /**
+     * receive message and show weather
+     */
+    private Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case SHOW_RESPONSE:
+                    String response=(String)msg.obj;
+                    Log.d("log",response);
+                    Utility.handleWeatherResponse(ShowWeatherActivity.this, response);
+                    showWeather();
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 
     /**
      * convert date to weekday
@@ -345,7 +398,6 @@ public class ShowWeatherActivity extends AppCompatActivity implements View.OnCli
             mDrawerLayout.openDrawer(Gravity.LEFT);
         }
     }
-
 
     /**
      * feedback setting
@@ -392,7 +444,6 @@ public class ShowWeatherActivity extends AppCompatActivity implements View.OnCli
     protected void onStop() {
         super.onStop();
     }
-
 
     @Override
     protected void onDestroy() {

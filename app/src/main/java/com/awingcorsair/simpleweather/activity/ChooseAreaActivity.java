@@ -39,11 +39,11 @@ import java.util.List;
  * Created by Mao on 2016/4/3.
  */
 public class ChooseAreaActivity extends AppCompatActivity {
-    public static final int LEVEL_PROVINCE = 0;
+    private static final int LEVEL_PROVINCE = 0;
 
-    public static final int LEVEL_CITY = 1;
+    private static final int LEVEL_CITY = 1;
 
-    public static final int LEVEL_COUNTY = 2;
+    private static final int LEVEL_COUNTY = 2;
 
     private ProgressDialog progressDialog;
     private TextView titleText;
@@ -99,6 +99,14 @@ public class ChooseAreaActivity extends AppCompatActivity {
         }
            //requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.choose_area);
+        initView();
+        queryProvinces();
+    }
+
+    /**
+     * init main view
+     */
+    private void initView(){
         listView = (ListView) findViewById(R.id.list_view);
         titleText = (TextView) findViewById(R.id.title_text);
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, dataList);
@@ -129,8 +137,6 @@ public class ChooseAreaActivity extends AppCompatActivity {
                 }
             }
         });
-        queryProvinces();
-
     }
 
     /**
@@ -157,12 +163,10 @@ public class ChooseAreaActivity extends AppCompatActivity {
      */
     private void queryCities() {
         cityList = weatherDB.loadCities(selectedProvince.getId());
-        Log.d("why", "selectedProvinces:" + selectedProvince.getId());
         if (cityList.size() > 0) {
             dataList.clear();
             for (City city : cityList) {
                 dataList.add(city.getCityName());
-                Log.d("why", "city is :" + city.getCityName());
             }
             adapter.notifyDataSetChanged();
             listView.setSelection(0);
@@ -319,7 +323,6 @@ public class ChooseAreaActivity extends AppCompatActivity {
             String str = location.getCity();
             String locate_result = str.substring(0, str.length() - 1);
             //Toast.makeText(ChooseAreaActivity.this,"定位失败"+location.getLocType(),Toast.LENGTH_SHORT).show();
-
             //show weather
             if (location.getLocType() == 61 || location.getLocType() == 161) {
                 Intent intent = new Intent(ChooseAreaActivity.this, ShowWeatherActivity.class);
@@ -330,6 +333,5 @@ public class ChooseAreaActivity extends AppCompatActivity {
                 Toast.makeText(ChooseAreaActivity.this, "定位失败，请手动选择城市", Toast.LENGTH_SHORT).show();
             }
         }
-
     }
 }

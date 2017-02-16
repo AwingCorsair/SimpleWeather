@@ -117,21 +117,21 @@ public class Utility {
         int condition_code=now.getCond().getCode();
 
         //initialize day1
-        DailyForecast dailyforecast_day1 =weatherInfo.getDaily_forecast().get(1);
+        DailyForecast dailyforecast_day1 =weatherInfo.getDaily_forecast().get(0);
         String timeDay1= dailyforecast_day1.getDate();
         String conditionDay1= dailyforecast_day1.getCond().getTxt_d();
         String tempBelowDay1= dailyforecast_day1.getTmp().getMin();
         String tempHighDay1= dailyforecast_day1.getTmp().getMax();
 
         //initialize day2
-        DailyForecast dailyforecast_day2 =weatherInfo.getDaily_forecast().get(2);
+        DailyForecast dailyforecast_day2 =weatherInfo.getDaily_forecast().get(1);
         String timeDay2= dailyforecast_day2.getDate();
         String conditionDay2= dailyforecast_day2.getCond().getTxt_d();
         String tempBelowDay2= dailyforecast_day2.getTmp().getMin();
         String tempHighDay2= dailyforecast_day2.getTmp().getMax();
 
         //initialize day3
-        DailyForecast dailyforecast_day3 =weatherInfo.getDaily_forecast().get(3);
+        DailyForecast dailyforecast_day3 =weatherInfo.getDaily_forecast().get(2);
         String timeDay3= dailyforecast_day3.getDate();
         String conditionDay3= dailyforecast_day3.getCond().getTxt_d();
         String tempBelowDay3= dailyforecast_day3.getTmp().getMin();
@@ -142,6 +142,7 @@ public class Utility {
         saveWeatherInfoDay1(context, timeDay1, conditionDay1, tempBelowDay1, tempHighDay1);
         saveWeatherInfoDay2(context, timeDay2, conditionDay2, tempBelowDay2, tempHighDay2);
         saveWeatherInfoDay3(context, timeDay3, conditionDay3, tempBelowDay3, tempHighDay3);
+
     }
 
     /**
